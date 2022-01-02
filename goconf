@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+rm -rf _build_
+mkdir -p _build_
+pushd _build_
+
+../configure --prefix=/usr/local/opt/gdb/HEAD-a2c58332-aarch64 --enable-targets=aarch64-unknown-elf --target=aarch64-unknown-elf \
+  --disable-debug --disable-dependency-tracking --disable-werror \
+  --disable-binutils --disable-gas --disable-ld --disable-gold --disable-gprof --disable-libstdcxx \
+  --disable-itcl --disable-tk --disable-tcl --disable-winsup --disable-gdbtk --disable-libgui \
+  --disable-rda --disable-sid --disable-newlib --disable-libgloss \
+  --enable-compressed-debug-sections=all \
+  --with-lzma --with-liblzma-prefix=/opt/homebrew/Cellar/xz/5.2.5/ \
+  --with-system-zlib --with-python=/opt/homebrew/bin/python3 \
+  --with-libgmp-prefix=/opt/homebrew/Cellar/gmp/6.2.1_1/
+
+make
+make install-gdb maybe-install-gdbserver
+
+popd
